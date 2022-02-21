@@ -1,0 +1,24 @@
+<% if @book_new.errors.any? %>
+   <ul class="alert alert-light text-danger" role="alert">
+    <h6 class="alert-heading">
+      <%= pluralize(@book_new.errors.count,"error") %> prohibited this obj from being saved:
+    </h6>
+  <% @book_new.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+  <% end %>
+   </ul>
+ <% end %>
+
+<%= form_with model:@book_new,local:true do |f| %>
+  <div class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: 'form-control book_title' %>
+  </div>
+  <div class="form-group">
+    <%= f.label :opinion %>
+    <%= f.text_area :body, class: 'form-control book_body' %>
+  </div>
+  <div class="form-group">
+    <%= f.submit class: 'btn btn-success' %>
+  </div>
+<% end %>
