@@ -1,4 +1,6 @@
 class FavoritesController < ApplicationController
+  before_action :set_book
+
 
   def create
     book = Book.find(params[:book_id])
@@ -15,5 +17,11 @@ class FavoritesController < ApplicationController
     # redirect_to "/books"
     redirect_back fallback_location: @book
   end
+
+private
+  def set_book
+    @book = Book.find(params[:book_id])
+  end
+
 
 end
