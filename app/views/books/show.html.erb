@@ -35,7 +35,7 @@
     <div class='col-md-8 offset-md-1'>
   		<h2>Book detail</h2>
   		<table class='table'>
-  		  <tr>
+  		  <tr id="book_<%= @book.id %>">
           <td><%= link_to(@user) do %>
             <%= image_tag @user.get_profile_image(100,100) %><br>
             <%= @user.name %>
@@ -49,15 +49,15 @@
             <!--< else %>-->
             <!--  <td colspan="2"></td>-->
             <!--< end %>-->
-          <td><% if @book.favorited_by?(current_user) %>
+          <td class="favorite-btn"><% if @book.favorited_by?(current_user) %>
               <p class="text-danger">
-                <%= link_to book_favorites_path(@book),method: :delete, class:"text-danger" do %>
+                <%= link_to book_favorites_path(@book),method: :delete,remote: true, class:"text-danger" do %>
                 ♥︎<%= @book.favorites.count %>
                 <% end %>
               </p>
               <% else %>
               <p>
-                <%= link_to book_favorites_path(@book),method: :post do %>
+                <%= link_to book_favorites_path(@book),method: :post,remote: true do %>
                 ♡<%= @book.favorites.count %>
                 <% end %>
               </p>
@@ -90,12 +90,8 @@
 
 
       <%= form_with model:[@book,@book_comment] do |f| %>
-        <div class="form-group">
-          <%= f.text_area :comment, class: 'form-control book_comment', rows:'5' %>
-        </div>
-        <div class="form-group">
+          <%= f.text_area :comment, size:'90x5' %>
           <%= f.submit "送信" %>
-        </div>
       <% end %>
 
       </div>
