@@ -9,7 +9,10 @@ class BooksController < ApplicationController
 
   def index
     # @book = Book.find(params[:id])
-    @books = Book.all
+    # @ranks = Book.joins(:favorites).where(favorites: {created_at: 0.days.ago.prev_week..0.days.ago.prev_week(:sunday)}).group(:id).order("count(favorite) desc")
+    # @ranks= Book.left_outer_joins(:favorites).group('favorites.id').select('favorites.*, COUNT(favorites.*) AS favorites_count').distinct.reorder(favorites_count: :desc)
+    @books = Book.find(Favorite.group(:book_id).where(created_at: Time.current.all_week).order('count(book_id) desc').pluck(:book_id))
+    # @books = Book.all
     @book_new = Book.new
     # @user = User.all
     @book_comment = BookComment.new
@@ -49,6 +52,10 @@ class BooksController < ApplicationController
     @book.destroy
     redirect_to "/books"
   end
+
+  # def rank
+  #   @ranks = Book.joins(:favorites).where(favorites: {created_at: 0.days.ago.prev_week..0.days.ago.prev_week(:sunday)}).group(:id.order("count(*) desc"))
+  # end
 
   private
   def book_params
