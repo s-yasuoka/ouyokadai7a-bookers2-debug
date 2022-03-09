@@ -1,0 +1,12 @@
+<h1>Chats#show</h1>
+<p>Find me in app/views/chats/show.html.erb</p>
+
+<div id="chats" data-room_id="<%= @room.id %>">
+  <label for="message">Chat Text</label><br>
+  <textarea name="message" id="message" cols="30" rows="10"></textarea><br>
+  <small>Shift + Enterで送信</small>
+  <h2>Chats --></h2>
+  <% @room.chats.each do |message| %>
+    <%= render partial: 'message', locals: { message: message, current_user: nil } %>
+  <% end %>
+</div>

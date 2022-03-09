@@ -1,0 +1,14 @@
+<div class="message">
+  <p>
+    <%# 部分テンプレートで渡ってくるcurrent_user内に、ユーザー情報がなければActionCable経由として判断 %>
+    <% if current_user.nil? %>
+      <%# DBから受け取る場合の表示 %>
+      <small><%= message.user.email %></small><br>
+      <%= message.message %>
+    <% else %>
+      <%# ActionCableから受け取る場合の表示 %>
+      <small><%= current_user.email %></small><br>
+      <%= message['message'] %>
+    <% end %>
+  </p>
+</div>
